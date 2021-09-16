@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Denis leave in</title>
+	<style>
+	*{
+		box-sizing: border-box;
+		padding: 0;
+		margin: 0;
+		background-color: #000;
+	}
+		.container{
+			width: 100vw;
+			height: 100vh;
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: center;
+		}
+		h1 span{
+			display: block;
+			padding: 8px 12px;
+			background-color: rgba(255,255,255, 0.1);
+			margin: 0 4px;
+			color: darkred;
+		}
+		h1 span i{
+			font-weight: 800;
+			background: none;
+			color: green;
+		}
+		h1{
+			width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			font-family: sans-serif;
+			font-size: 60px;
+			color: green;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1 style="margin-top: auto;">Denis leave company in:</h1>
+		<h1 id="timer"  style="margin-bottom: auto;"></h1>
+	</div>
+<script>
+	let timer_show = document.getElementById("timer");
+ 
+// Функция для вычисления разности времени
+function diffSubtract(date1, date2) {
+    return date2 - date1;
+}
+ 
+// Массив данных о времени
+let end_date = {
+    "full_year": 2021, // Год
+    "month": 12, // Номер месяца
+    "day": 26, // День
+    "hours": "00", // Час
+    "minutes": "00", // Минуты
+    "seconds": "00" // Секунды
+}
+ 
+// Строка для вывода времени
+let end_date_str = `${end_date.full_year}-${end_date.month}-${end_date.day}T${end_date.hours}:${end_date.minutes}:${end_date.seconds}`;
+// Запуск интервала таймера
+timer = setInterval(function () {
+    // Получение времени сейчас
+    let now = new Date();
+    // Получение заданного времени
+    let date = new Date(end_date_str);
+    // Вычисление разницы времени 
+    let ms_left = diffSubtract(now, date);
+    // Если разница времени меньше или равна нулю 
+    if (ms_left <= 0) { // То
+        // Выключаем интервал
+        clearInterval(timer);
+        // Выводим сообщение об окончание
+        alert("Время закончилось");
+    } else { // Иначе
+        // Получаем время зависимую от разницы
+        let res = new Date(ms_left);
+        // Делаем строку для вывода
+        let str_timer = `${res.getUTCFullYear() - 1970 > 0 ? "<span>Years" + (res.getUTCFullYear() - 1970) + "</span>" : ''} ${+res.getUTCMonth() !== 0 && "<span><i>" + res.getUTCMonth() +  "</i> month</span>"} <span><i>  ${+res.getUTCDate() - 1}</i> days</span><span> <i> ${+res.getUTCHours()}:${+res.getUTCMinutes()}:${+res.getUTCSeconds()} <i></span>`;
+        // Выводим время
+        timer_show.innerHTML = str_timer;
+        console.log(str_timer)
+    }
+}, 1000)
+
+</script>
+</body>
+</html>
